@@ -3,6 +3,16 @@ class RuleBasedNER:
        This class serves as the implementation of our baseline method. We initialize the different
        keywords associated with 5 characteristics we are using for our recommendation. 
 
+       This class implements Rule-based NER, which refers to finding entities in user response just 
+       on the basis of whether that keyword exists in their response or not.
+
+       For example, 
+       user response: I want a Dell laptop
+       matched_entity: brand => Dell
+
+       user response: I want a good laptop for school
+       matched_entity: NONE
+
        ----------------------------
        Attributes
 
