@@ -1,0 +1,40 @@
+Can you show me laptops from a specific brand, like Apple?
+I need a budget-friendly laptop. What’s the cheapest one you have?
+I need a laptop with a powerful processor for heavy tasks. Any suggestions?
+Can you recommend a laptop with at least a Core i5 processor?
+I need a compact laptop with a smaller display. What are my options?
+What’s the most affordable laptop with a 15.6-inch display?
+I am trying to find a laptop that has a core i9 processor and display size of 15.6, what are my options?
+I am looking specifically for a Samsung laptop.
+I want a laptop that has at least 16GB RAM and doesn’t cost more than $500. Any options?
+What’s the best laptop for coding with lots of RAM and a decent processor?
+I’m looking for a laptop with a Core i5 processor and at least 16GB of RAM. Can you help?
+Can you recommend a laptop with the highest RAM but still within a budget?
+Can you recommend a laptop with a small display size but that is not an Apple brand?
+I’m looking for an ASUS laptop with minimum requirements of Core i5 processor, 8GB of RAM, and a 15.6-inch display under $700. What are my options?
+I am very picky with my processors, can you provide me with a laptop with the most recent processor?
+Can you find me a Dell laptop that’s cheap?
+What’s the best laptop for gaming with a powerful processor and at least 16GB of RAM?
+Can you find a laptop with a 15.6-inch screen and under $700, but with a high-end processor?
+Can you recommend a laptop with a 15-inch display and a Core i7 processor for video editing?
+I’m looking for a laptop with at least 256GB of storage. Any suggestions?
+Get me a laptop that has a large screen and is Apple
+Dell laptop, newest model, durable
+Can I get an Asus laptop with fast speed and a big screen?
+Do you have a good laptop that I can use for school?
+I’m looking for a work laptop. It should be fast and I should be able to run Adobe products
+Can you help me find a good and cheap laptop that is suitable for machine learning?
+Fast gaming laptop, no price limit
+Appl laptop, fast processing, 1000 budget
+I’m a college student and I’m looking for an affordable laptop
+I’m looking for a touchscreen Samsung laptop. It needs to be large in screen size but I’m okay with a slower processor”
+I need a laptop for video editing, preferably something powerful from HP.
+I want a lightweight laptop for traveling. Any recommendations?
+Can I get a Microsoft laptop with decent speed and a touchscreen?
+Can you help me find a cheap HP laptop for school?
+I’m looking for a powerful laptop with a medium screen size. No brand preference.
+Looking for a budget-friendly laptop with a large screen for watching movies.
+Can you recommend me a good laptop that is known for its durability and is lightweight?
+Fast laptop
+I’m an ML scientist and I need a computer with very fast processing speeds and sturdy processors
+I’m a CS student and I need a laptop that can run Linux
