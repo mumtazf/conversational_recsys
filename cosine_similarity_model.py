@@ -17,6 +17,9 @@ class ExtractKeywords:
         self.pre_computed_embeddings = self.compute_embeddings()
 
     def compute_embeddings(self):
+        """
+        We initialize a dictionary for relevant keywords. We then precompute embeddings for all the keywords
+        """
         ## initializing a list of keywords that are used as features
         features_dict = {}
         features_dict['display_size'] = [10.1, 11.6, 12.4, 13.0, 13.3, 13.4, 13.5, 13.6, 14.0, 14.1, 14.2, 14.5, 15.0, 15.3, 15.6, 16.0, 16.1, 16.2, 17.3, 18.0]
@@ -31,7 +34,7 @@ class ExtractKeywords:
             
     def get_embedding(self,word):
         """
-        This method returns the embeddings
+        This method returns the embeddings for each word
         """
         try:
             return self.model[word]
@@ -39,6 +42,9 @@ class ExtractKeywords:
             return np.zeros(self.model.vector_size)
         
     def preprocess_input(self, input):
+        """
+        This method splits the input on the basis of white-space anre removes stopwords like 'the, and, a'
+        """
         tokens = input.split(" ")
         stop_words = set(stopwords.words('english'))
 
@@ -72,8 +78,11 @@ class ExtractKeywords:
                 best_label, best_score = token_scores[final_category]
 
                 if best_score > 0.7: ## our score is 0.5 for it to be classified as a label
+                    self.result[final_category] = token
                     results.append((token, final_category, best_score))
             else:
                 results.append((token, "unknown", 0))
         
         return results
+    
+    
