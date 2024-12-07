@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)))))
 
 from user import User
 
@@ -35,5 +35,15 @@ class LaptopRecommender:
             budget_sim = 1 / (1 + budget_diff / user_preferences['budget'])
             similarity_scores.append(budget_sim)
         
-
+        if user_preferences.get('ram_memory'):
+            # If RAM is specified, create a similarity score
+            ram_sim = (self.df['ram'].astype(str) == str(user_preferences['ram_memory'])).astype(int)
+            similarity_scores.append(ram_sim)
+        
+        # Display size matching
+        if user_preferences.get('display_size'):
+            # Compute similarity based on closeness of display size
+            display_diff = np.abs(self.df['display_size'] - float(user_preferences['display_size']))
+            display_sim = 1 / (1 + display_diff)
+            similarity_scores.append(display_sim)
 

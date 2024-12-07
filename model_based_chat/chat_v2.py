@@ -60,7 +60,7 @@ class chat_v2:
             ## if the category is already set then we don't change it. NOTE: If we find a better category later on, then we change it that way
                 self.user.set_entities(category, keyword)
 
-    def refine_results(self, result):
+    def refine_results(self, result, current_slot):
         """
         Heuristics used to detect user preferences if the model detected the category as 'unknown'
         """
@@ -72,7 +72,9 @@ class chat_v2:
             elif category == "unknown" and "gb" in keyword.lower():
                 extract_number = re.search(r'\d+', keyword)
                 number = extract_number.group()
-                self.user.set_entities("ram_memory", int(number)) 
+                self.user.set_entities("ram_memory", int(number))
+            elif category == "unknown" and current_slot == "display_size":
+                self.user.set_entities("display_size", int(keyword)) 
 
     def detect_slots(self, user_response, current_slot):
         """
@@ -81,7 +83,7 @@ class chat_v2:
 
         result = self.extractor.classify_tokens(user_response)
         self.update_user_preferences(result)
-        self.refine_results(result)
+        self.refine_results(result, current_slot)
 
         print(result)
         
@@ -173,7 +175,7 @@ class InteractionLoop(cmd.Cmd):
 
         user_response = input(f"{self.chatbot.user.username}> ")
 
-        self.chatbot.detect_slots(user_response)
+        self.chatbot.detect_slots(user_response, "")
 
         previous_slot = ""
 
