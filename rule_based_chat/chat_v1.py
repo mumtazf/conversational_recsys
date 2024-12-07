@@ -2,7 +2,7 @@ import cmd
 import pandas as pd
 import numpy as np
 from user import User
-from rule_based_ner import RuleBasedNER
+from rule_based_chat.rule_based_ner import RuleBasedNER
 
 class Chatbot:
     """

@@ -31,3 +31,11 @@ named_entities = [('dell', 'brand', 0.99999994), ('1000-2000.', 'unknown', 0), (
    1. If a user doesn't care about processor types then we choose the 
 most frequently occuring processors within our dataset as a default.
    2. For user intention about prcoessors -- Uses binary classification by implementing sentence-level transformer to detect whether the user's response said yes or no
+
+
+Current benefits: 
+1. It doesn't ask users too many questions. Like it doesn't look like that they're being interrogated. This version is more conversational
+2. Cosine similarity help us understand what options are closest even though they might not be the exact match
+
+Current limitations: 
+1. It does not accept a budget range

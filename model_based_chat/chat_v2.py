@@ -1,6 +1,11 @@
 import cmd
+
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)))))
+
 from user import User
-from cosine_similarity_model import ExtractKeywords
+from model_based_chat.cosine_similarity_model import ExtractKeywords
 import time
 import re
 
