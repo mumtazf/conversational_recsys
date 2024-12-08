@@ -1,0 +1,5 @@
+find_laptop|processor_tier=high|
+find_laptop|price=cheap
+find_laptop|ram_memory=don't_care|display_size=15.6
+find_laptop|ram_memory=8GB
+find_laptop|brand=HP
