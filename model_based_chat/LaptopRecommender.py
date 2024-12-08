@@ -12,7 +12,7 @@ from user import User
 
 class LaptopRecommender:
     def __init__(self, user):
-        self.df = pd.read_csv("data/laptops.csv")
+        self.df = pd.read_csv("/data/laptops.csv")
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         self.user = user
         
@@ -59,3 +59,6 @@ class LaptopRecommender:
         
         return top_recommendations
 
+if __name__ == "__main__":
+    recommender = LaptopRecommender(User())
+    recommender.recommend({})
