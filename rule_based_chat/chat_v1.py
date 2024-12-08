@@ -1,6 +1,12 @@
 import cmd
 import pandas as pd
 import numpy as np
+
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)))))
+
 from user import User
 from rule_based_chat.rule_based_ner import RuleBasedNER
 
@@ -12,7 +18,10 @@ class Chatbot:
     """
     def __init__(self):
         self.name = "Laptops Nerd"
-        self.database = pd.read_csv("data\laptops.csv")
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        data_path = os.path.join(base_dir, "data", "laptops.csv")
+        
+        self.database = pd.read_csv(data_path)
         self.prompts = {}
         self.user = User()
         self.entities = ['brand', 'display_size', 'ram_memory', 'budget', 'processor_tier']

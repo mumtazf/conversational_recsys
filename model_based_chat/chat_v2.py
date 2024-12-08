@@ -102,9 +102,9 @@ class chat_v2:
         self.update_user_preferences(result)
         self.refine_results(user_response, result, current_slot)
 
-        print(result)
+        #print(result)
         
-        print(f"updated user preferences are: {self.user.return_all_entities()}")
+        #print(f"updated user preferences are: {self.user.return_all_entities()}")
 
     def get_empty_slots(self):
         """
@@ -206,7 +206,7 @@ class InteractionLoop(cmd.Cmd):
             ## get the first empty slot
             if len(self.chatbot.get_empty_slots()) != 0:
                 current_slot = self.chatbot.get_empty_slots()[0]
-                print(f"current slot is {current_slot}")
+                #print(f"current slot is {current_slot}")
 
                 if current_slot == "processor_tier":
                     self.bot_says("Do you have a preference for processor type or nope? Processors are components that determine the performance and capabilities of the laptop.")
