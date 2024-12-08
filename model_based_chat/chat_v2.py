@@ -9,6 +9,8 @@ from model_based_chat.cosine_similarity_model import ExtractKeywords
 import time
 import re
 
+from LaptopRecommender import LaptopRecommender
+
 class chat_v2:
     
     def __init__(self):
@@ -67,12 +69,16 @@ class chat_v2:
         ## refining for budget if no entities have matched yet
         for item in result:
             keyword, category, score = item[0], item[1], item[2]
+
             if category == 'unknown' and str.isnumeric(keyword) and int(keyword) > 100:
                 self.user.set_entities("budget", int(keyword))
+            
+            ## regex for extracting ram memory info
             elif category == "unknown" and "gb" in keyword.lower():
                 extract_number = re.search(r'\d+', keyword)
                 number = extract_number.group()
                 self.user.set_entities("ram_memory", int(number))
+                
             elif category == "unknown" and current_slot == "display_size":
                 self.user.set_entities("display_size", int(keyword)) 
 
@@ -131,7 +137,10 @@ class chat_v2:
         return self.extractor.get_yes_no_label(input)
     
     def generate_recommendation(self):
-        return
+        recommender = LaptopRecommender(self.user)
+        recommender.recommend(self.user.return_all_entities())
+
+        print(recommender)
 
 
 
