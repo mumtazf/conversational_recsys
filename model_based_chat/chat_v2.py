@@ -27,6 +27,8 @@ class chat_v2:
 
         self.prompts["start_chat"] = f"{self.user.username}, so tell me what kind of laptop are you looking for. You can describe anything like its brand, your budget, how fast you want it to be, or anything else on your mind."
 
+        self.prompts["goodbye"] = f"I hope you found my recommendations helpful {self.user.username}! Please start the chat again if you want to explore your other laptop preferences."
+
         self.prompts["filler"] = ["Ohh okay I see. Tell me more about the speed you'd like.", "That's a good choice! Can you tell me more if you prefer a large screen or not?", "Aha! Okay let me think that through"]
 
         self.prompts["ram_memory"] = ["Hmm so would you like a laptop that's fast or would you rather prefer something slightly slower but cheaper?", "Is 8GB of RAM good or are you thinking of something higher?"]
@@ -38,7 +40,13 @@ class chat_v2:
         self.prompts["brand"] = ["Do you have any specific brand in mind?", "Can you tell me more about the brands you like? For example, Apple, Dell, etc"]
 
         self.prompts["budget"] = ["Any budget in mind?", "Please provide me with a specific dollar value for your budget"]
-    
+
+        self.prompts["high_confidence"] = "You'd love this recommendation: "
+
+        self.prompts["medium_confidence"] = "I think you'll like this laptop: "
+
+        self.prompts["low_confidence"] = "What about this laptop? It doesn't match all your preferences but you could check it out: "
+
     def get_prompt(self, keyword):
         return self.prompts[keyword]
     
@@ -62,12 +70,12 @@ class chat_v2:
             ## if the category is already set then we don't change it. NOTE: If we find a better category later on, then we change it that way
                 self.user.set_entities(category, keyword)
 
-    def refine_results(self, result, current_slot):
+    def refine_results(self, user_response, predicted_slots, current_slot):
         """
         Heuristics used to detect user preferences if the model detected the category as 'unknown'
         """
         ## refining for budget if no entities have matched yet
-        for item in result:
+        for item in predicted_slots:
             keyword, category, score = item[0], item[1], item[2]
 
             if category == 'unknown' and str.isnumeric(keyword) and int(keyword) > 100:
@@ -80,7 +88,10 @@ class chat_v2:
                 self.user.set_entities("ram_memory", int(number))
                 
             elif category == "unknown" and current_slot == "display_size":
-                self.user.set_entities("display_size", int(keyword)) 
+                self.user.set_entities("display_size", float(keyword)) 
+
+            elif current_slot == "ram_memory" and "fast" in user_response:
+                self.user.set_entities("ram_memory", "16")
 
     def detect_slots(self, user_response, current_slot):
         """
@@ -89,7 +100,7 @@ class chat_v2:
 
         result = self.extractor.classify_tokens(user_response)
         self.update_user_preferences(result)
-        self.refine_results(result, current_slot)
+        self.refine_results(user_response, result, current_slot)
 
         print(result)
         
@@ -134,16 +145,19 @@ class chat_v2:
 
     
     def clarify_intent(self, input):
+        """
+        Clarifies whether this feature is important to the user or not. If it isn't then
+        the algorithm choose a default value for that feature in set_default_value
+        """
         return self.extractor.get_yes_no_label(input)
     
     def generate_recommendation(self):
+        """
+        This method calls the LaptopRecommender algorithm to get the predicted top 5 laptops
+        """
         recommender = LaptopRecommender(self.user)
-        recommender.recommend(self.user.return_all_entities())
-
-        print(recommender)
-
-
-
+        result = recommender.recommend(self.user.return_all_entities())
+        return result
 
 class InteractionLoop(cmd.Cmd):
     """
@@ -217,7 +231,32 @@ class InteractionLoop(cmd.Cmd):
                 if current_slot in self.chatbot.get_empty_slots():
                     self.chatbot.remove_prompt(current_slot)
             else:
-                self.chatbot.generate_recommendation()
+                result = self.chatbot.generate_recommendation()
+                self.show_recommendations(result)
+                break
+    
+    def show_recommendations(self, result):
+        def confident_speech(result):
+            score = result['similarity_score']
+
+            if score > 0.8:
+                self.bot_says(self.chatbot.get_prompt("high_confidence")+ result['Model'])
+            elif score > 0.5 and score < 0.8: 
+                self.bot_says(self.chatbot.get_prompt("medium_confidence")+ result['Model'])
+            elif score < 0.5:
+                self.bot_says(self.chatbot.get_prompt("low_confidence")+ result['Model'])
+
+        length_of_result = len(result) 
+
+        self.bot_says(f"I found {length_of_result} laptops that suit your preferences. Would you like to see the first one?")
+        input(f"Please press enter to view them")
+
+        for i in range(0, length_of_result):
+            confident_speech(result.iloc[i])
+            input(f"Please press enter to see the next one")
+        
+        self.bot_says(self.chatbot.get_prompt("goodbye"))
+        return
 
     def bot_says(self, response):
         print(self.bot_prompt + response + '\n')

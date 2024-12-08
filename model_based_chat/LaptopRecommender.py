@@ -7,12 +7,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)))))
-
 from user import User
 
 class LaptopRecommender:
     def __init__(self, user):
-        self.df = pd.read_csv("/data/laptops.csv")
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        data_path = os.path.join(base_dir, "data", "laptops.csv")
+        
+        self.df = pd.read_csv(data_path) # if you get path error - remove os.path.join and try again
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         self.user = user
         
@@ -37,15 +39,22 @@ class LaptopRecommender:
         
         if user_preferences['ram_memory']:
             # If RAM is specified, create a similarity score
-            ram_sim = (self.df['ram'].astype(str) == str(user_preferences['ram_memory'])).astype(int)
+            ram_sim = (self.df['ram_memory'].astype(str) == str(user_preferences['ram_memory'])).astype(int)
             similarity_scores.append(ram_sim)
         
         # Display size matching
-        if user_preferences.get['display_size']:
+        if user_preferences['display_size']:
             # Compute similarity based on closeness of display size
             display_diff = np.abs(self.df['display_size'] - float(user_preferences['display_size']))
             display_sim = 1 / (1 + display_diff)
             similarity_scores.append(display_sim)
+        
+        if similarity_scores:
+            combined_similarity = np.mean(similarity_scores, axis=0)
+            return combined_similarity
+        else:
+            # If no preferences specified, return uniform similarity
+            return np.ones(len(self.df))
         
     def recommend(self, user_preferences, top_k=5):
         """
@@ -56,8 +65,10 @@ class LaptopRecommender:
         self.df['similarity_score'] = similarities
         
         top_recommendations = self.df.sort_values('similarity_score', ascending=False).head(top_k)
+        top_recommendations['Model'] = top_recommendations['Model'].apply(lambda x : x.split("(")[0])
+        result = top_recommendations[['Model', 'similarity_score']]
         
-        return top_recommendations
+        return result
 
 if __name__ == "__main__":
     recommender = LaptopRecommender(User())
