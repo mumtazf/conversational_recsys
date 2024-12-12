@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import os
+import string
+
 
 from gensim.models import KeyedVectors
 import gensim.downloader as api
@@ -51,7 +53,7 @@ class ExtractKeywords:
         precomputed_embeddings = {}
 
         features_dict['display_size'] = [10.1, 11.6, 12.4, 13.0, 13.3, 13.4, 13.5, 13.6, 14.0, 14.1, 14.2, 14.5, 15.0, 15.3, 15.6, 16.0, 16.1, 16.2, 17.3, 18.0]
-        features_dict['brand'] = ['acer', 'apple', 'asus', 'avita', 'axl', 'chuwi', 'dell', 'fujitsu', 'gigabyte', 'honor', 'hp', 'iball', 'infinix', 'jio', 'lenovo', 'lg', 'microsoft', 'msi', 'primebook', 'realme', 'samsung', 'tecno', 'ultimus', 'walker', 'wings', 'zebronics']
+        features_dict['brand'] = ['acer', 'macbook','apple', 'asus', 'avita', 'axl', 'chuwi', 'dell', 'fujitsu', 'gigabyte', 'honor', 'hp', 'iball', 'infinix', 'jio', 'lenovo', 'lg', 'microsoft', 'msi', 'primebook', 'realme', 'samsung', 'tecno', 'ultimus', 'walker', 'wings', 'zebronics']
         features_dict['ram_memory'] = ['2gb', '4gb', '8gb', '12gb', '16gb', '32gb', '36gb', 'fast']
 
         for category, items in features_dict.items():
@@ -82,6 +84,7 @@ class ExtractKeywords:
         """
         This method splits the input on the basis of white-space anre removes stopwords like 'the, and, a'
         """
+        input = ''.join([char for char in input if char not in string.punctuation])
         tokens = input.split(" ")
         stop_words = set(stopwords.words('english'))
 

@@ -41,3 +41,28 @@ Current benefits:
 
 Current limitations: 
 1. It does not accept a budget range
+
+
+==> Making a figure out of the human evaluation categories.
+interestingness
+humanness
+knowledgability 
+engagingness
+how engaged were you with the chatbot
+
+[Jenn]
+Abstract
+Intro 
+Dataset
+
+[Shared]
+Related work split => based on BERT and the cosine similarity and NER approaches
+Approachecs uses and background for chatv1,v2
+Results
+Discussion/Evaluation
+Conclusion + Future implications 
+References
+
+
+
+

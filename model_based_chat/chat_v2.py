@@ -1,4 +1,5 @@
 import cmd
+import logging
 
 import os
 import sys
@@ -10,6 +11,7 @@ import time
 import re
 
 from LaptopRecommender import LaptopRecommender
+
 
 class chat_v2:
     
@@ -23,7 +25,7 @@ class chat_v2:
         """
         The prompts range from generic in the beginning to specific by the end
         """
-        self.prompts["greeting"] = f"It is lovely to meet you {self.user.username}. Thanks for choosing me as your laptop guide for the day. Please enter what kind of laptop you're looking for and I will try my best to recommend you a laptop that suits your needs. A few instructions before you begin:\n - type :quit if you would like to end the chat at any time.\n"
+        self.prompts["greeting"] = f"It is lovely to meet you {self.user.username}. Thanks for choosing me as your laptop guide for the day. Please enter what kind of laptop you're looking for and I will try my best to recommend you a laptop that suits your needs. A few instructions before you begin:\n - Press: Ctrl/Cmd + C if you would like to end the chat at any time.\n - I'm a new chatbot so I'm learning. Please be patient as I ask questions. I will start with generic questions and get more specific"
 
         self.prompts["start_chat"] = f"{self.user.username}, so tell me what kind of laptop are you looking for. You can describe anything like its brand, your budget, how fast you want it to be, or anything else on your mind."
 
@@ -93,6 +95,9 @@ class chat_v2:
             elif current_slot == "ram_memory" and "fast" in user_response:
                 self.user.set_entities("ram_memory", "16")
 
+            elif category == "brand" and "macbook" in user_response:
+                self.user.set_entities("brand", "Apple")
+
     def detect_slots(self, user_response, current_slot):
         """
         Main method for parsing user response, classifying it, and returning the result 
@@ -101,10 +106,8 @@ class chat_v2:
         result = self.extractor.classify_tokens(user_response)
         self.update_user_preferences(result)
         self.refine_results(user_response, result, current_slot)
-
-        #print(result)
         
-        #print(f"updated user preferences are: {self.user.return_all_entities()}")
+        print(f" Backend --- updated user preferences are: {self.user.return_all_entities()}")
 
     def get_empty_slots(self):
         """
@@ -138,11 +141,10 @@ class chat_v2:
         """
         preferred_brand = self.user.get_entities("brand")
         
-        if preferred_brand == "apple":
+        if preferred_brand == r"[A|a]pple":
             self.user.set_entities("processor_tier", "m1")
         else:
             self.user.set_entities("processor_tier", "core i5") # most frequent one in our dataset
-
     
     def clarify_intent(self, input):
         """
@@ -253,13 +255,15 @@ class InteractionLoop(cmd.Cmd):
 
         for i in range(0, length_of_result):
             confident_speech(result.iloc[i])
+            print(f"\nIts features are:\n -RAM Memory: {result.iloc[i]['ram_memory']}\n -Price {result.iloc[i]['price (usd)']}\n -Processor: {result.iloc[i]['processor_tier']}\n -Display Size: {result.iloc[i]['display_size']}")
+            print(f"My confidence for this recommendation is {result.iloc[i]['similarity_score']}")
             input(f"Please press enter to see the next one")
         
         self.bot_says(self.chatbot.get_prompt("goodbye"))
         return
 
     def bot_says(self, response):
-        print(self.bot_prompt + response + '\n')
+        print(self.bot_prompt + response)
     
     def set_asking_question(self):
         self.asking_question = not (self.asking_question)

@@ -66,7 +66,7 @@ class LaptopRecommender:
         
         top_recommendations = self.df.sort_values('similarity_score', ascending=False).head(top_k)
         top_recommendations['Model'] = top_recommendations['Model'].apply(lambda x : x.split("(")[0])
-        result = top_recommendations[['Model', 'similarity_score']]
+        result = top_recommendations
         
         return result
 
