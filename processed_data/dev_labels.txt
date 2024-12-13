@@ -1,0 +1,5 @@
+O O O O O O O O O O O O O O O O O O O O O
+O O O O O O O O O O O O O O O O O
+O O O O O O O O O O O O O B-display_size I-display_size I-display_size O O O
+O O O O O O O O O B-ram_memory I-ram_memory O O O O O O
+O O O O O O O O O O O O O O O O B-brand O O

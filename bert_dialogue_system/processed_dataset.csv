@@ -1,6 +1,5 @@
 tokens,labels
-"['Can', 'you', 'show', 'me', 'laptops', 'from', 'a', 'specific', 'brand,', 'like', 'Apple?']",
-"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']"
+"['Can', 'you', 'show', 'me', 'laptops', 'from', 'a', 'specific', 'brand,', 'like', 'Apple?']", "['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']"
 "['I', 'need', 'a', 'budget-friendly', 'laptop.', 'What’s', 'the', 'cheapest', 'one', 'you', 'have?']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']"
 "['I', 'need', 'a', 'laptop', 'with', 'a', 'powerful', 'processor', 'for', 'heavy', 'tasks.', 'Any', 'suggestions?']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']"
 "['Can', 'you', 'recommend', 'a', 'laptop', 'with', 'at', 'least', 'a', 'Core', 'i5', 'processor?']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']"
