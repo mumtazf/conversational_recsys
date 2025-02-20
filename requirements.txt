@@ -3,3 +3,4 @@ pandas
 gensim
 nltk
 sklearn
+sentence-transformers

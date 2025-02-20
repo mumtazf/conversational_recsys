@@ -16,3 +16,9 @@ rule-based NER to find keywords in the user responses.
 `user.py` contains User class that stores user preferences
 
 `rule_based_ner.py` contains the skeleton of keywords being used for rule-based ner. The extraction of keywords from responses takes place in `chat.py`.
+
+--------------------
+## How to run the code?
+
+1. Install the required packages by running `pip install -r requirements.txt`
+2. Run chat_v1.py or chat_v2.py
